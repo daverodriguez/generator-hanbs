@@ -1,4 +1,4 @@
-# generator-hanbs-wp
+# generator-hanbs
 
 A [Yeoman](http://yeoman.io) generator for scaffolding HanBootStrap into all types of projects. Consolidated from the generator-hbs-standard, generator-hbs-requirejs, and generator-hanbs-wp projects.
 
