@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+
+	<body data-section="<%= controllerPath %>" data-page="myPage">
+
+        <!-- Add your site or application content here -->
+		<h1>Welcome to the HanBootStrap RequireJS starter application</h1>
+
+		<h2>What do?</h2>
+		<ol>
+			<li>Make web page.</li>
+			<li>Make Javascripts in AMD format (using define).</li>
+			<li>Load HBS.js</li>
+			<li>Use <code>HBS.namespace()</code> to make your Javascripts accessible globally.</li>
+			<li>Make a section controller and put your module init code in it.</li>
+			<li>Add <code>data-section</code> and <code>data-page</code> variables to your <code>&lt;body&gt;</code>.</li>
+			<li>Magic!</li>
+		</ol>
+
+		<p>RequireJS (http://requirejs.org/) is used to manage Javascript dependencies. This file contains two &lt;script&gt; tags:
+				one for Modernizr, and one that links to require.js.</p>
+
+
+		<pre><code>&lt;script type=&quot;text/javascript&quot; data-main=&quot;js/<%= appNS %>/main&quot; src=&quot;js/lib/require.js&quot;&gt;</script></code></pre>
+
+		<p>This last tag contains a data-main attribute that points to a JS file called main.js, which sets up
+		some base variables including the Javascript root for the site (currently /src/js), loads global dependencies
+		like jQuery, and then loads another file called the bootstrapper or HBS (/src/js/lib/hanbootstrapper.js).</p>
+		
+		<p>Bootstrapper includes some object-creation and extension functions to make object-oriented Javascript easier. It
+		also contains a function that runs when the page is loaded and looks for two data variables on the body element
+		(data-section and data-page).</p>
+
+		<pre><code>&lt;body data-section=&quot;<%= appNS %>/sections/mySection&quot; data-page=&quot;myPage&quot;&gt;</code></pre>
+		
+		<p>Instead of maintaining separate include files for each section, we use these two variables to load a section-specific
+		Javascript file and run a specific function to initialize the current page.</p>
+		
+		<p>The bootstrapper first attempts to load the Javascript file referenced by data-section (again using require.js).
+		The Javascript root is automatically prepended, and the.js extension is prepended: /content/js/<%= appNS %>/sections/mysection.js</p>
+		
+		<p>This file is called a section controller. It contains an init() function that holds code that needs to run on every
+		page in a section, and can optionally contain a specific function for every page. The init() function is automatically
+		run if it exists.</p>
+		
+		<p>After the section controller loads and init() is run, the bootstrapper looks for a function in the section controller
+		matching the data-page attribute, in this case standardRoom(). If that function exists, it is run.</p>
+		
+		<p>A section controller or might load many other Javascript classes and/or third party libraries. Every application-
+		specific Javascript file in the project (located in the <%= appNS %> subdirectory) file is in Asynchronous Module Definition (AMD) format.</p>
+		
+		<p>Require.js uses AMD to name and keep track of modules that have already been loaded, so if two classes require the
+		same library, it doesn’t have to load it twice. The AMD format also enables require.js’s optimizer to scan the project
+		and compile all the Javascript classes into a small number of built files for better performance on staging and 
+		production. More information about AMD is located here: <a href="http://requirejs.org/docs/whyamd.html">http://requirejs.org/docs/whyamd.html</a></p>
+		
+		<p>Third-party libraries and some legacy code are not in AMD format, and that’s okay. Require.js can handle these at
+		runtime using a “shim config”. Common.js has two properties of interest, paths and shim.</p>
+		
+		<p>Paths allows us to specify shorter aliases for frequently-used modules. Instead of referring to
+		‘lib/jquery-1.10.2.min.js’ we can alias it to ‘jquery’.</p>
+
+		<pre><code>paths: {
+	'jquery': 'lib/jquery-1.10.2.min'
+}</pre></code>
+
+		<p>Shim allows us to specify dependencies for libraries that are not in AMD format. This way we can be sure
+			that these libraries don’t run until all their dependencies are loaded.</p>
+
+		<pre><code>shim: {
+	'jquery.ui': {
+		deps: ['jquery']
+	}
+}</code></pre>
+
+		<p>Open your browser console to see the output from initializing each type of example class.</p>
+
+		<p>This section is for the example widget.</p>
+		<ul>
+			<li class="make-red">Red</li>
+			<li>Not Red</li>
+			<li>Not Red</li>
+			<li class="make-red">Red</li>
+			<li>Not Red</li>
+			<li class="make-red">Red</li>
+			<li class="make-blue">Blue</li>
+			<li>Not Red</li>
+		</ul>
+
+		<script src="/js/lib/require.js" data-main="/js/<%= appNS %>/main"></script>
+		<!--
+			Run "grunt requirejs" to concatenate and optimize the JS
+			To deploy the built version, comment out the script above and uncomment this one
+		-->
+		<!--<script src="/js/lib/require.js" data-main="/js-built/<%= appNS %>/main"></script>-->
+    </body>
+</html>
