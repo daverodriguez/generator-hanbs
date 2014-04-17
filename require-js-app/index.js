@@ -30,7 +30,7 @@ RequirejsappGenerator.prototype.files = function files() {
 
 	this.mkdir(this.srcDir);
 
-	this.mkdir(this.srcDir + '/js-built');
+	this.mkdir(this.srcDir + '/' + this.buildDir);
 
 	this.mkdir(this.srcDir + '/' + this.jsPath);
 	this.mkdir(this.srcDir + '/' + this.jsPath + '/lib');
@@ -52,8 +52,7 @@ RequirejsappGenerator.prototype.files = function files() {
 		this.template('src/index.html', this.srcDir + '/index.html');
 
 		this.mkdir(this.srcDir + '/css');
-		this.copy('src/css/main.css', this.srcDir + '/css/main.css');
-		this.copy('src/css/normalize.css', this.srcDir + '/css/normalize.css');
+		this.copy('src/css/bootstrap.css', this.srcDir + '/css/bootstrap.css');
 
 		this.mkdir(this.srcDir + '/' + this.jsPath + '/' + this.appNS + '/examples');
 		this.template('src/js/APP/examples/MyClass.js', this.srcDir + '/' + this.jsPath + '/' + this.appNS + '/examples/MyClass.js');

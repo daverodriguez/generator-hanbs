@@ -11,7 +11,7 @@ module.exports = function (grunt) {
 					port: 3000,
 					keepalive: true,
 					livereload: true,
-					base: 'src/',
+					base: '<%= srcDir %>/',
 					hostname: '*'
 				}
 			}
@@ -19,9 +19,9 @@ module.exports = function (grunt) {
 		requirejs: {
 			compile: {
 				options: {
-					mainConfigFile: "src/js/<%= appNS %>/main.js",
-					dir: 'src/js-built',
-					appDir: 'src/js',
+					mainConfigFile: "<%= srcDir %>/<%= jsPath %>/<%= appNS %>/main.js",
+					dir: "<%= srcDir + "/" + buildDir %>",
+					appDir: "<%= srcDir + "/" + jsPath %>",
 					optimize: 'uglify2',
 					skipDirOptimize: true,
 					//generateSourceMaps: true,
@@ -32,17 +32,18 @@ module.exports = function (grunt) {
 						{
 							//module names are relative to baseUrl
 							name: '<%= appNS %>/main'
-						},
+						}<% if (createController) { %>,
 						//Now set up a build layer for each main layer, but exclude
 						//the common one. "exclude" will exclude nested
 						//the nested, built dependencies from "common". Any
 						//"exclude" that includes built modules should be
 						//listed before the build layer that wants to exclude it.
 						{
-							//module names are relative to baseUrl/paths config
-							name: '<%= appNS %>/controllers/mysection',
-							exclude: ['<%= appNS %>/main']
+						//module names are relative to baseUrl/paths config
+						name: '<%= appNS %>/controllers/<%= controllerName %>',
+						exclude: ['<%= appNS %>/main']
 						}
+						<% } %>
 					]
 				}
 			}

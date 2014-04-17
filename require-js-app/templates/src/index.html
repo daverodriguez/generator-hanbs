@@ -12,39 +12,36 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/bootstrap.css">
     </head>
 
-	<body data-section="<%= controllerPath %>" data-page="myPage">
+	<body data-section="<%= controllerPath %>" data-page="examplePage">
 
         <!-- Add your site or application content here -->
 		<h1>Welcome to the HanBootStrap RequireJS starter application</h1>
 
-		<h2>What do?</h2>
-		<ol>
-			<li>Make web page.</li>
-			<li>Make Javascripts in AMD format (using define).</li>
-			<li>Load HBS.js</li>
-			<li>Use <code>HBS.namespace()</code> to make your Javascripts accessible globally.</li>
-			<li>Make a section controller and put your module init code in it.</li>
-			<li>Add <code>data-section</code> and <code>data-page</code> variables to your <code>&lt;body&gt;</code>.</li>
-			<li>Magic!</li>
-		</ol>
+		<h2>How to preview this application</h2>
+		<p>This application needs to run on a server to work properly. Run <code>grunt connect</code>
+			in your console and point a web browser at <a href="http://localhost:3000">http://localhost:3000</a>.</p>
 
-		<p>RequireJS (http://requirejs.org/) is used to manage Javascript dependencies. This file contains two &lt;script&gt; tags:
-				one for Modernizr, and one that links to require.js.</p>
+		<h2>How to build the application</h2>
+		<p>This application is preconfigured for RequireJS builds. To build the JavaScript for production
+		deployment, run <code>grunt requirejs</code> in your console. Make sure the <code>data-main</code> attribute
+			of your RequireJS script tag is pointed at the <code><%= buildDir %></code> directory.
+		</p>
 
+		<h2>How to use HanBootStrap (HanBS) and Require.js</h2>
+		<p>This project uses RequireJS (http://requirejs.org/) to manage Javascript dependencies.
+			This file contains two &lt;script&gt; tags: one for Modernizr, and one that links to require.js.</p>
 
-		<pre><code>&lt;script type=&quot;text/javascript&quot; data-main=&quot;js/<%= appNS %>/main&quot; src=&quot;js/lib/require.js&quot;&gt;</script></code></pre>
+		<pre><code>&lt;script type=&quot;text/javascript&quot; data-main=&quot;<%= jsPath %>/<%= appNS %>/main&quot; src=&quot;<%= jsPath %>/lib/require.js&quot;&gt;</script></code></pre>
 
-		<p>This last tag contains a data-main attribute that points to a JS file called main.js, which sets up
-		some base variables including the Javascript root for the site (currently /src/js), loads global dependencies
-		like jQuery, and then loads another file called the bootstrapper or HBS (/src/js/lib/hanbootstrapper.js).</p>
-		
-		<p>Bootstrapper includes some object-creation and extension functions to make object-oriented Javascript easier. It
-		also contains a function that runs when the page is loaded and looks for two data variables on the body element
-		(data-section and data-page).</p>
+		<p>The RequireJS script contains a <code>data-main</code> attribute that points to a JS file called main.js.
+			Use the main.js file as the starting point of your application.
+			Main.js has one dependency, HanBootStrap (<%= jsPath %>/lib/hbs-require.js).
+			HanBS includes some object-creation and extension functions to make object-oriented
+			Javascript easier. It also contains a function that runs when the page is loaded and looks for two data variables
+			on the body element (data-section and data-page).</p>
 
 		<pre><code>&lt;body data-section=&quot;<%= appNS %>/sections/mySection&quot; data-page=&quot;myPage&quot;&gt;</code></pre>
 		
@@ -52,7 +49,7 @@
 		Javascript file and run a specific function to initialize the current page.</p>
 		
 		<p>The bootstrapper first attempts to load the Javascript file referenced by data-section (again using require.js).
-		The Javascript root is automatically prepended, and the.js extension is prepended: /content/js/<%= appNS %>/sections/mysection.js</p>
+		The Javascript root is automatically prepended, and the.js extension is prepended: <%= jsPath %>/<%= appNS %>/sections/<%= controllerName %>.js</p>
 		
 		<p>This file is called a section controller. It contains an init() function that holds code that needs to run on every
 		page in a section, and can optionally contain a specific function for every page. The init() function is automatically
@@ -102,11 +99,11 @@
 			<li>Not Red</li>
 		</ul>
 
-		<script src="/js/lib/require.js" data-main="/js/<%= appNS %>/main"></script>
+		<script src="<%= jsPath %>/lib/require.js" data-main="<%= jsPath %>/<%= appNS %>/main"></script>
 		<!--
 			Run "grunt requirejs" to concatenate and optimize the JS
 			To deploy the built version, comment out the script above and uncomment this one
 		-->
-		<!--<script src="/js/lib/require.js" data-main="/js-built/<%= appNS %>/main"></script>-->
+		<!--<script src="<%= jsPath %>/lib/require.js" data-main="<%= buildDir %>/<%= appNS %>/main"></script>-->
     </body>
 </html>

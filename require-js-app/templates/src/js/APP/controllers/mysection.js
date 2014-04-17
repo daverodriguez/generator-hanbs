@@ -1,10 +1,6 @@
 /**
- * @exports <%= appNS %>.controllers.mySection
+ * @exports <%= appNS %>.controllers.<%= controllerName %>
  * @requires HBS
- * @requires <%= appNS %>/examples/MyClass
- * @requires <%= appNS %>/examples/MySubclass
- * @requires <%= appNS %>/examples/MySingleton
- * @requires <%= appNS %>/examples/MyWidget
  */
 define([
 	'hbs',
@@ -17,11 +13,11 @@ define([
 	var module = {};
 
 	module.init = function() {
-		console.log('Hi from mySection.init()');
+		console.log('Hi from <%= controllerName %>.init()');
 	};
 
-	module.myPage = function() {
-		console.log('Hi from mySection.myPage()');
+	module.examplePage = function() {
+		console.log('Hi from <%= controllerName %>.examplePage()');
 
 		// Make a new MyClass
 		console.log('#----- <%= appNS %>.MyClass -----#');
@@ -55,6 +51,6 @@ define([
 		});
 	};
 
-	HBS.namespace('<%= appNS %>.controllers.mySection', module);
+	HBS.namespace('<%= appNS %>.controllers.<%= controllerName %>', module);
 	return module;
 });
