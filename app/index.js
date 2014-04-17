@@ -93,6 +93,7 @@ HanbsWpGenerator.prototype.askFor = function askFor() {
 			default: 'home'
 		},
 		{
+			when: function(props) { return props.appType !== 'wordpress' },
 			type: 'confirm',
 			name: 'createExampleClasses',
 			message: 'Would you like to generate example classes?',
@@ -148,6 +149,10 @@ HanbsWpGenerator.prototype.app = function app() {
 		});
 	} else if (this.appType === 'requirejs') {
 		this.invoke("hanbs:require-js-app", {args: [''], options: options}, function() {
+			done();
+		});
+	}  else if (this.appType === 'wordpress') {
+		this.invoke("hanbs:wordpress-app", {args: [''], options: options}, function() {
 			done();
 		});
 	}
