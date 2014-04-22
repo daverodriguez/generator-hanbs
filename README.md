@@ -14,7 +14,8 @@ A [Yeoman](http://yeoman.io) generator for scaffolding HanBootStrap into all typ
 Version 0.1.2 adds a new "class" subgenerator that you can use to scaffold HanBS-compatible classes. The syntax is:
 `yo hanbs:class ClassName`
 
-If you add dots or slashes to the class name, the class will be put into a subfolder, e.g.
+If you add dots or slashes to the class name, the class will be put into a subfolder, e.g. `yo hanbs:class util.StringUtils`
+will be created as `util/StringUtils.js` under your application's JavaScript path.
 
 As of version 0.1.0, your initial settings will be saved to `hanbs.json` for future use.
 
