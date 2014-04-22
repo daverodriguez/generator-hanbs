@@ -4,7 +4,7 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 
 
-var HanbsWpGenerator = module.exports = function HanbsWpGenerator(args, options, config) {
+var HanbsGenerator = module.exports = function HanbsGenerator(args, options, config) {
 	yeoman.generators.Base.apply(this, arguments);
 
 	this.on('end', function () {
@@ -14,9 +14,9 @@ var HanbsWpGenerator = module.exports = function HanbsWpGenerator(args, options,
 	this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
 
-util.inherits(HanbsWpGenerator, yeoman.generators.Base);
+util.inherits(HanbsGenerator, yeoman.generators.Base);
 
-HanbsWpGenerator.prototype.askFor = function askFor() {
+HanbsGenerator.prototype.askFor = function askFor() {
 	var cb = this.async();
 
 	// have Yeoman greet the user.
@@ -28,13 +28,13 @@ HanbsWpGenerator.prototype.askFor = function askFor() {
 			name: 'appType',
 			message: 'What type of application would you like to scaffold?',
 			choices: [{
-				name: 'Standard',
+				name: 'A Standard JavaScript application',
 				value: 'standard'
 			}, {
-				name: 'RequireJS',
+				name: 'A RequireJS application',
 				value: 'requirejs'
 			}, {
-				name: 'Wordpress',
+				name: 'A Wordpress application',
 				value: 'wordpress'
 			}]
 		},
@@ -123,7 +123,7 @@ HanbsWpGenerator.prototype.askFor = function askFor() {
 	}.bind(this));
 };
 
-HanbsWpGenerator.prototype.app = function app() {
+HanbsGenerator.prototype.app = function app() {
 	this.template('_package.json', 'package.json');
 	this.copy('_bower.json', 'bower.json');
 
@@ -132,6 +132,7 @@ HanbsWpGenerator.prototype.app = function app() {
 
 	var options = {
 		nested: true,
+		appType: this.appType,
 		appName: this.appName,
 		appNS: this.appNS,
 		jsPath: this.jsPath,
@@ -158,9 +159,10 @@ HanbsWpGenerator.prototype.app = function app() {
 	}
 };
 
-HanbsWpGenerator.prototype.projectfiles = function projectfiles() {
+HanbsGenerator.prototype.projectfiles = function projectfiles() {
 	// Save settings for later
 	var savedSettings = {
+		appType: this.appType,
 		appName: this.appName,
 		appNS: this.appNS,
 		jsPath: this.jsPath,

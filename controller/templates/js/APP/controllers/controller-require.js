@@ -21,14 +21,14 @@ define([
 
 		<% if (createExampleClasses) { %>
 
-			// Make a new MyClass
-			console.log('#----- <%= appNS %>.MyClass -----#');
-			var m = new <%= appNS %>.MyClass();
+		// Make a new MyClass
+		console.log('#----- <%= appNS %>.MyClass -----#');
+		var m = new <%= appNS %>.MyClass();
 
-			// Make a new Subclass
-			console.log('#----- <%= appNS %>.MySubclass -----#');
+		// Make a new Subclass
+		console.log('#----- <%= appNS %>.MySubclass -----#');
 			var c = new <%= appNS %>.MySubclass();
-			console.log("<%= appNS %>.MySubclass instanceof <%= appNS %>.MyClass: " + (c instanceof <%= appNS %>.MyClass) );
+				console.log("<%= appNS %>.MySubclass instanceof <%= appNS %>.MyClass: " + (c instanceof <%= appNS %>.MyClass) );
 
 		// Get a reference to a Singleton
 		console.log('#----- <%= appNS %>.MySingleton -----#');

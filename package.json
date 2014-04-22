@@ -1,7 +1,7 @@
 {
   "name": "generator-hanbs",
-  "version": "0.1.0",
-  "description": "A Yeoman generator for scaffolding HanBootStrap into Wordpress sites.",
+  "version": "0.1.1",
+  "description": "A Yeoman generator for scaffolding HanBootStrap into sites. Now includes standard, RequireJS, and WordPress variants.",
   "keywords": [
     "yeoman-generator",
 	"HanBootStrap"
