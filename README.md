@@ -11,6 +11,10 @@ A [Yeoman](http://yeoman.io) generator for scaffolding HanBootStrap into all typ
 
 ## New features
 
+Version 0.1.3: Updated the class and controller subgenerators to write hanbs.json if it does not exist, so you can use
+those generators as standalones, or have different configurations per folder. Updated the controller subgenerator to 
+ use the node path module and to allow dot-separated controller names like class.
+
 Version 0.1.2 adds a new "class" subgenerator that you can use to scaffold HanBS-compatible classes. The syntax is:
 `yo hanbs:class ClassName`
 

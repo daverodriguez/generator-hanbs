@@ -21,12 +21,12 @@ ClassGenerator.prototype.askFor = function askFor() {
 
 	try {
 		settingsFile = this.readFileAsString(settingsPath);
-		var settings = JSON.parse(settingsFile);
+		this.settings = JSON.parse(settingsFile);
 
-		this.appType = settings.appType;
-		this.appNS = settings.appNS;
-		this.jsPath = settings.jsPath;
-		this.srcDir = settings.srcDir || null;
+		this.appType = this.settings.appType;
+		this.appNS = this.settings.appNS;
+		this.jsPath = this.settings.jsPath;
+		this.srcDir = this.settings.srcDir || '';
 	} catch(e) {
 		console.log('Unable to load settings');
 	}
@@ -98,7 +98,6 @@ ClassGenerator.prototype.askFor = function askFor() {
 
 ClassGenerator.prototype.files = function files() {
 	var appPrefix = this.appNS + (this.className.indexOf('/') > -1 ? '/' : '.');
-	this.packageName = ( (this.className.indexOf(this.appNS) === 0) ? this.className : appPrefix + this.className ).replace(/\//g, '.');
 	this.classPath = this.className.replace(appPrefix, '').replace(/\./g, path.sep);
 	var outPath = path.join(this.srcDir, this.jsPath, this.appNS, this.classPath + '.js');
 
@@ -108,5 +107,16 @@ ClassGenerator.prototype.files = function files() {
 			break;
 		default:
 			this.template('class-standard.js', outPath);
+	}
+
+	if (!this.settings) {
+		var savedSettings = {
+			appType: this.appType,
+			appNS: this.appNS,
+			jsPath: this.jsPath,
+			srcDir: this.srcDir
+		}
+
+		this.write( 'hanbs.json', JSON.stringify(savedSettings) );
 	}
 };

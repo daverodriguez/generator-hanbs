@@ -1,6 +1,7 @@
 'use strict';
 var util = require('util');
 var yeoman = require('yeoman-generator');
+var path = require('path');
 
 var ControllerGenerator = module.exports = function ControllerGenerator(args, options, config) {
 	// By calling `NamedBase` here, we get the argument to the subgenerator call
@@ -22,12 +23,12 @@ ControllerGenerator.prototype.askFor = function askFor() {
 
 	try {
 		settingsFile = this.readFileAsString(settingsPath);
-		var settings = JSON.parse(settingsFile);
+		this.settings = JSON.parse(settingsFile);
 
-		this.appType = settings.appType;
-		this.appNS = settings.appNS;
-		this.jsPath = settings.jsPath;
-		this.srcDir = settings.srcDir || null;
+		this.appType = this.settings.appType;
+		this.appNS = this.settings.appNS;
+		this.jsPath = this.settings.jsPath;
+		this.srcDir = this.settings.srcDir || '';
 	} catch(e) {
 		console.log('Unable to load settings');
 	}
@@ -100,14 +101,30 @@ ControllerGenerator.prototype.askFor = function askFor() {
 
 ControllerGenerator.prototype.files = function files() {
 
+	var appPrefix = this.appNS + (this.controllerName.indexOf('/') > -1 ? '/' : '.');
+	this.classPath = this.controllerName.replace(appPrefix, '').replace(/\./g, path.sep);
+	var outPath = path.join(this.srcDir, this.jsPath, this.appNS, 'controllers', this.classPath + '.js');
+
 	this.createExampleClasses = false;
 
 	switch (this.appType) {
 		case "requirejs":
-			this.template('js/APP/controllers/controller-require.js', this.srcDir + '/' + this.jsPath + '/' + this.appNS + '/controllers/' + this.controllerName + '.js');
+			this.template('js/APP/controllers/controller-require.js', outPath);
 			break;
 		default:
-			this.template('js/APP/controllers/controller-standard.js', this.jsPath + '/' + this.appNS + '/controllers/' + this.controllerName + '.js');
+			this.template('js/APP/controllers/controller-standard.js', outPath);
+	}
+
+	if (!this.settings) {
+		var savedSettings = {
+			appType: this.appType,
+			appNS: this.appNS,
+			createExampleClasses: this.createExampleClasses,
+			jsPath: this.jsPath,
+			srcDir: this.srcDir
+		}
+
+		this.write( 'hanbs.json', JSON.stringify(savedSettings) );
 	}
 
 };
